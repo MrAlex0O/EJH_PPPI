@@ -20,6 +20,7 @@ namespace Logic.Queries
         }
         public List<GetLessonResponse> GetAll()
         {
+			//получение информации обо всех уроках
             string querry = $@"SELECT ""Lessons"".""Id"",
                                         ""Disciplines"".""Id"" AS ""DisciplineId"", ""Disciplines"".""Name"" AS ""Disciplinename"",
                                         l.""Id"" AS ""LectorId"", l1.""Surname"" || ' ' || l1.""Name"" || ' ' || l1.""Midname"" AS ""LectorFullName"",
