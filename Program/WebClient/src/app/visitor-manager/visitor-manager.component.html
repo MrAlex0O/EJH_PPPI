@@ -1,0 +1,20 @@
+<app-generic-combo-box name="lesson" [placeholder]="'Select lesson'" [models]="lessons" [viewPattern]="renderFunction" (myEvent)="importLesson($event)"></app-generic-combo-box>
+
+<br />
+<ul>
+  <li *ngFor="let student of students; let i = index">
+
+    <mat-form-field>
+      <p>
+        {{student.surname}} {{student.name}} {{student.midname}} {{selectedStatuses[i].name}}
+      </p>
+      <mat-select (selectionChange)="selectStatus(i, $event.value)" selected="selectedStatuses[i]">
+        <mat-option *ngFor="let status of statuses" [value]="status">
+          {{ status.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button mat-button (click)="save(i)">Save</button>
+  </li>
+
+</ul>
