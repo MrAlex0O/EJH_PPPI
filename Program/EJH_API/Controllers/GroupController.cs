@@ -11,6 +11,7 @@ namespace API.Controllers
     [Authorization.Attributes.Authorize( Roles.Admin )]
     [Route("api/[controller]")]
     [ApiController]
+	//контроллер групп
     public class GroupController : ControllerBase
     {
         IGroupWriteService _groupWriteService;
