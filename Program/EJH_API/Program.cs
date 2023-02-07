@@ -19,6 +19,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
+//строитель
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
