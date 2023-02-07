@@ -32,6 +32,7 @@ namespace DataBase.Contexts
             modelBuilder.Entity<LessonType>().HasData(new LessonType
             {
                 Id = Guid.Parse("f69a359a-4986-4253-9409-078660dc8fc8"),
+				//Семинар
                 Name = "Семинар",
                 EnumId = 3,
                 DateCreate = DateTime.Now,
@@ -131,6 +132,7 @@ namespace DataBase.Contexts
         }
         private static void UpdateAdmin(ModelBuilder modelBuilder)
         {
+			//TODO change credentials
             modelBuilder.Entity<Person>().HasData(new Person
             {
                 Id = Guid.Parse("6aa74582-0eba-4eee-a960-3b6fc3092130"),
