@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace Logic.Profiles
 {
+	//профиль трансляции объектов сущности "посещение"
     public class LessonVisitorsProfile : Profile
     {
         public LessonVisitorsProfile()
