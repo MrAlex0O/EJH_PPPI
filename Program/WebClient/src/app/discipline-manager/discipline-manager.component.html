@@ -1,0 +1,30 @@
+<app-generic-combo-box [placeholder]="'Select discipline'" [models]="disciplines" [viewPattern]="disciplineRenderFunction" (myEvent)="importDiscipline($event)"></app-generic-combo-box>
+
+<mat-form-field>
+  <mat-label>name</mat-label>
+  <input matInput type="text" name="name" id="name-input" #newName [(ngModel)]="name" />
+</mat-form-field>
+<br />
+<app-generic-combo-box #lectorSelector [placeholder]="'Select lector'" [models]="teachers" [viewPattern]="teacherRenderFunction" (myEvent)="importLector($event)"></app-generic-combo-box>
+<app-generic-combo-box #groupSelector [placeholder]="'Select group'" [models]="groups" [viewPattern]="groupRenderFunction" (myEvent)="importGroup($event)"></app-generic-combo-box>
+<mat-form-field>
+  <mat-label>semester</mat-label>
+  <input matInput type="text" name="semester" id="semester-input" [(ngModel)]="semester" />
+</mat-form-field>
+<br />
+<ul>
+  <li *ngFor="let item of assistantsFullNames; let i = index">
+    {{item}}
+    <button mat-button (click)="deleteAssistant(i)">Удалить ассистента</button>
+  </li>
+
+</ul>
+
+<app-generic-combo-box #assistantSelector [placeholder]="'Select teacher'" [models]="teachers" [viewPattern]="teacherRenderFunction"></app-generic-combo-box>
+
+<button mat-button (click)="addAssistant()">Добавить ассистента</button>
+
+<br />
+<button mat-button (click)="updateDiscipline()">Обновить дисциплину</button>
+<button mat-button (click)="addDiscipline()">Добавить дисциплину</button>
+<button mat-button (click)="deleteDiscipline()">Удалить дисциплину</button>
