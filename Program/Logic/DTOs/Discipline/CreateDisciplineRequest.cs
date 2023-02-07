@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Logic.DTOs.Discipline
 {
+	//запрос на создание дисциплины
     public class CreateDisciplineRequest
     {
         public string Name { get; set; }
