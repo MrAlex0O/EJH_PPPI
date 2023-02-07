@@ -7,6 +7,7 @@ import { StudentVisitsByDayRequest } from '../_models/Reports/studentVisitsByDay
 import { StudentVisitsByIntervalRequest } from '../_models/Reports/studentVisitsByIntervalRequest';
 import { StudentVisitsReportModel } from '../_models/Reports/studentVisitsModel';
 
+//отчёёёт
 const API_PATH = environment.api_path + '/Report';
 @Injectable({
   providedIn: 'root'
