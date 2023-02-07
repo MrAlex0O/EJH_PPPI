@@ -1,0 +1,16 @@
+
+
+
+
+<table mat-table [dataSource]="dataSource" matSort>
+
+    <tr [matColumnDef]="header" *ngFor="let header of objectKeys(columnHeader)">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{columnHeader[header]}} </th>
+      <td mat-cell *matCellDef="let element"> {{element[header]}} </td>
+    </tr>
+
+
+    <tr mat-header-row *matHeaderRowDef="objectKeys(columnHeader)"></tr>
+    <tr mat-row *matRowDef="let row; columns: objectKeys(columnHeader);"></tr>
+</table>
+

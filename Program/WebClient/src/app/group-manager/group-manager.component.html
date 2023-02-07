@@ -1,0 +1,15 @@
+
+<form>
+  
+  <app-generic-combo-box [placeholder]="'Select group'" [models]="groups" [viewPattern]="groupRenderFunction" (myEvent)="importValue($event)"></app-generic-combo-box>
+    <br />
+    <mat-form-field>
+      <mat-label>name</mat-label>
+      <input matInput type="text" name="name" id="group-input" #newGroup [(ngModel)]="name" />
+    </mat-form-field>
+
+    <br />
+    <button mat-button name="update" value="" (click)="update()">Обновить</button>
+    <button mat-button name="add" value="" (click)="add()">Добавить</button>
+    <button mat-button name="delete" value="" (click)="delete()">Удалить</button>
+</form>
