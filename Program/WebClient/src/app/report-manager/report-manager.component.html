@@ -1,0 +1,38 @@
+<app-generic-combo-box [placeholder]="'Select report'" [models]="reports" [viewPattern]="reportRenderFunction" (myEvent)="importReport($event)"></app-generic-combo-box>
+
+<app-generic-combo-box *ngIf="isGroup" [placeholder]="'Select group'" [models]="groups" [viewPattern]="groupRenderFunction" (myEvent)="importGroup($event)"></app-generic-combo-box>
+<app-generic-combo-box *ngIf="isDiscipline" [placeholder]="'Select discipline'" [models]="disciplines" [viewPattern]="disciplineRenderFunction" (myEvent)="importDiscipline($event)"></app-generic-combo-box>
+<app-generic-combo-box *ngIf="isStudent" [placeholder]="'Select student'" [models]="students" [viewPattern]="studentRenderFunction" (myEvent)="importStudent($event)"></app-generic-combo-box>
+
+
+
+<mat-form-field *ngIf="isDate">
+  <input matInput matInput [matDatepicker]="picker1" placeholder="Select date" [formControl]="date">
+  <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+  <mat-datepicker #picker1></mat-datepicker>
+</mat-form-field>
+
+<mat-form-field appearance="fill" *ngIf="isDateInterval">
+  <mat-label>Enter a date range</mat-label>
+  <mat-date-range-input [formGroup]="range" [rangePicker]="picker">
+    <input matStartDate formControlName="start" placeholder="Start date">
+    <input matEndDate formControlName="end" placeholder="End date">
+  </mat-date-range-input>
+  <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+  <mat-date-range-picker #picker></mat-date-range-picker>
+
+  <mat-error *ngIf="range.controls.start.hasError('matStartDateInvalid')">Invalid start date</mat-error>
+  <mat-error *ngIf="range.controls.end.hasError('matEndDateInvalid')">Invalid end date</mat-error>
+</mat-form-field>
+
+<br />
+<button (click)="getReportData()">Отобразить</button>
+
+<div>
+  <ng-container #outlet [ngTemplateOutlet]="content">
+  </ng-container>
+</div>
+<ng-template #content>
+
+  <app-generic-table [tableData]="tableData" [columnHeader]="columnHeader"></app-generic-table>
+</ng-template>
