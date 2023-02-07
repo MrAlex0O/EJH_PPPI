@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+//Text
 using System.Text;
 using System.Threading.Tasks;
 
@@ -63,6 +64,7 @@ namespace DataBase.Contexts
                 .WithMany(i => i.Disciplines)
                 .HasForeignKey(x => x.GroupId);
         }
+		//асинхронное сохранение изменений
         public async Task<bool> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
             try
