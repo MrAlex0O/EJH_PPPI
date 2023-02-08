@@ -86,7 +86,11 @@ namespace DataBase.Contexts
                 .WithMany(i => i.Disciplines)
                 .HasForeignKey(x => x.GroupId);
         }
-
+        /// <summary>
+        /// Асинхронное сохранение изменений
+        /// </summary>
+        /// <param name="cancellationToken">Токен отмены</param>
+        /// <returns>Результат сохранения</returns>
         public async Task<bool> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
             try
@@ -140,6 +144,10 @@ namespace DataBase.Contexts
             }
 
         }
+        /// <summary>
+        /// "Деструктор" класса
+        /// </summary>
+        /// <returns>Успешность уничтожения</returns>
         public bool Dispose()
         {
             try

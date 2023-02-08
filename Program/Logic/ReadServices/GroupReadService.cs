@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace Logic.ReadServices
 {
+    /// <summary>
+    /// Сервис чтения групп
+    /// </summary>
     public class GroupReadService : IGroupReadService
     {
         /// <summary>

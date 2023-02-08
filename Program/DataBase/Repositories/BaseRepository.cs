@@ -102,6 +102,10 @@ namespace DataBase.Repositories
         {
             return _context.Remove(entity).Entity;
         }
+        /// <summary>
+        /// Асинхронное сохранение изменений
+        /// </summary>
+        /// <returns>Результат сохранения</returns>
         public Task SaveChangesAsync()
         {
             return _context.SaveChangesAsync();

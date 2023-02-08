@@ -16,7 +16,13 @@ namespace API.Controllers
     [ApiController]
     public class GroupController : ControllerBase
     {
+        /// <summary>
+        /// Сервис записи групп
+        /// </summary>
         IGroupWriteService _groupWriteService;
+        /// <summary>
+        /// Сервис чтения групп
+        /// </summary>
         IGroupReadService _groupReadService;
         /// <summary>
         /// Конструктор с DI
