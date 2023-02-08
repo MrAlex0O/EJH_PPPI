@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace DataBase.Contexts
 {
+    /// <summary>
+    /// Первичная настройка БД
+    /// </summary>
     internal class SeedDB
     {
         private static void UpdateLessonType(ModelBuilder modelBuilder)

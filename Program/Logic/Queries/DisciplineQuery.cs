@@ -11,13 +11,27 @@ using System.Threading.Tasks;
 
 namespace Logic.Queries
 {
+    /// <summary>
+    /// Запросы дисциплин
+    /// </summary>
     public class DisciplineQuery : IDisciplineQuery
     {
+        /// <summary>
+        /// Строка подключения к БД
+        /// </summary>
         string _connectionString;
+        /// <summary>
+        /// Конструктор с DI
+        /// </summary>
+        /// <param name="configuration">Файл конфигураций</param>
         public DisciplineQuery(IConfiguration configuration)
         {
             _connectionString = configuration["ConnectionStrings:DefaultConnection"];
         }
+        /// <summary>
+        /// Получить все дисциплины
+        /// </summary>
+        /// <returns>Список дисциплин</returns>
         public List<GetDisciplineResponse> GetAll()
         {
             string querry = $@"SELECT ""Disciplines"".""Id"", ""Disciplines"".""Name"",
@@ -46,6 +60,11 @@ namespace Logic.Queries
                 return db.Query<GetDisciplineResponse>(querry).ToList();
             }
         }
+        /// <summary>
+        /// Получить дисциплину по id
+        /// </summary>
+        /// <param name="id">id дисциплины</param>
+        /// <returns>Дисциплина по id</returns>
         public GetDisciplineResponse Get(Guid id)
         {
             string querry = $@"SELECT ""Disciplines"".""Id"", ""Disciplines"".""Name"",
@@ -78,30 +97,30 @@ namespace Logic.Queries
         {
             string querry = $@"SELECT * FROM (
 
-SELECT ""Disciplines"".""Id"", ""Disciplines"".""Name"",
+                SELECT ""Disciplines"".""Id"", ""Disciplines"".""Name"",
 
-        l.""Id"" AS ""LectorId"", l1.""Surname"" || ' ' || l1.""Name"" || ' ' || l1.""Midname"" AS ""LectorFullName"",
-		""Groups"".""Id"" AS ""GroupId"", ""Groups"".""Name"" AS ""GroupName"",
-		""Disciplines"".""Semester"",
-		array_remove(array_agg(a.""Id""), null) AS ""AssistantsIds"",
+            l.""Id"" AS ""LectorId"", l1.""Surname"" || ' ' || l1.""Name"" || ' ' || l1.""Midname"" AS ""LectorFullName"",
+		    ""Groups"".""Id"" AS ""GroupId"", ""Groups"".""Name"" AS ""GroupName"",
+		    ""Disciplines"".""Semester"",
+		    array_remove(array_agg(a.""Id""), null) AS ""AssistantsIds"",
 
-        array_remove(array_agg(a1.""Surname"" || ' ' || a1.""Name"" || ' ' || a1.""Midname""), null) AS ""AssistantsFullNames""
-FROM ""Disciplines""
-LEFT JOIN ""Groups"" ON ""Groups"".""Id"" = ""Disciplines"".""GroupId""
-LEFT JOIN ""Teachers"" AS l ON l.""Id"" = ""Disciplines"".""LectorId""
-LEFT JOIN ""Persons"" AS l1 ON l1.""Id"" = l.""PersonId""
-LEFT JOIN ""Assistants"" AS a0 ON a0.""DisciplineId"" = ""Disciplines"".""Id""
-LEFT JOIN ""Teachers"" AS a ON a.""Id"" = a0.""TeacherId""
-LEFT JOIN ""Persons"" AS a1 ON a1.""Id"" = a.""PersonId""
+            array_remove(array_agg(a1.""Surname"" || ' ' || a1.""Name"" || ' ' || a1.""Midname""), null) AS ""AssistantsFullNames""
+            FROM ""Disciplines""
+            LEFT JOIN ""Groups"" ON ""Groups"".""Id"" = ""Disciplines"".""GroupId""
+            LEFT JOIN ""Teachers"" AS l ON l.""Id"" = ""Disciplines"".""LectorId""
+            LEFT JOIN ""Persons"" AS l1 ON l1.""Id"" = l.""PersonId""
+            LEFT JOIN ""Assistants"" AS a0 ON a0.""DisciplineId"" = ""Disciplines"".""Id""
+            LEFT JOIN ""Teachers"" AS a ON a.""Id"" = a0.""TeacherId""
+            LEFT JOIN ""Persons"" AS a1 ON a1.""Id"" = a.""PersonId""
 
-GROUP BY ""Disciplines"".""Id"", 
-		l.""Id"", l1.""Surname"" || ' ' || l1.""Name"" || ' ' || l1.""Midname"",
-		""Groups"".""Id"", ""Groups"".""Name"",
-		""Disciplines"".""Semester""
-ORDER BY ""Disciplines"".""DateCreate"" ASC) AS a
+            GROUP BY ""Disciplines"".""Id"", 
+		    l.""Id"", l1.""Surname"" || ' ' || l1.""Name"" || ' ' || l1.""Midname"",
+		    ""Groups"".""Id"", ""Groups"".""Name"",
+		    ""Disciplines"".""Semester""
+            ORDER BY ""Disciplines"".""DateCreate"" ASC) AS a
 
-WHERE ""LectorId"" = '{teacherId}'
-OR '{teacherId}' = ANY (""AssistantsIds"")";
+            WHERE ""LectorId"" = '{teacherId}'
+            OR '{teacherId}' = ANY (""AssistantsIds"")";
 
             using (IDbConnection db = new Npgsql.NpgsqlConnection(_connectionString))
             {

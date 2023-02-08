@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
+    /// <summary>
+    /// HTTP-контроллер дисциплин
+    /// </summary>
     //[Authorization.Authorize]
     [Route("api/[controller]")]
     [ApiController]
@@ -15,6 +18,12 @@ namespace API.Controllers
         IDisciplineWriteService _disciplineWriteService;
         IDisciplineReadService _disciplineReadService;
         IAssistantWriteService _assistantWriteService;
+        /// <summary>
+        /// Конструктор с DI
+        /// </summary>
+        /// <param name="disciplineWriteService">Сервис записи дисциплин</param>
+        /// <param name="disciplineReadService">Сервис чтения дисциплин</param>
+        /// <param name="assistantWriteService">Сервис записи ассистентов</param>
         public DisciplineController(IDisciplineWriteService disciplineWriteService, IDisciplineReadService disciplineReadService, IAssistantWriteService assistantWriteService)
         {
             _disciplineWriteService = disciplineWriteService;
@@ -22,7 +31,10 @@ namespace API.Controllers
             _assistantWriteService = assistantWriteService;
         }
 
-
+        /// <summary>
+        /// Получение дисциплин
+        /// </summary>
+        /// <returns>Все дисциплины</returns>
         // GET api/<DisciplineController>
         [HttpGet]
         public async Task<ActionResult<List<GetDisciplineResponse>>> Get()
@@ -36,7 +48,11 @@ namespace API.Controllers
                 return Conflict(ex.Message);
             }
         }
-
+        /// <summary>
+        /// Получение дисциплины по id
+        /// </summary>
+        /// <param name="id">id дисциплины</param>
+        /// <returns>Дисциплина по id</returns>
         // GET api/<DisciplineController>
         [HttpGet("{id}")]
         [Authorization.Attributes.AllowAnonymous]
@@ -51,7 +67,12 @@ namespace API.Controllers
                 return Conflict(ex.Message);
             }
         }
-        // GET api/<TeacherController>/5
+        /// <summary>
+        /// Получение дисциплин по id учителя
+        /// </summary>
+        /// <param name="teacherId">id учителя</param>
+        /// <returns>Дисциплины по id учителя</returns>
+        // GET api/<DisciplineController>/5
         [HttpGet("byTeacherId/{teacherId}")]
         [Authorization.Attributes.AllowAnonymous]
         public async Task<ActionResult<List<GetDisciplineResponse>>> GetByTeacherId(Guid teacherId)
@@ -65,7 +86,11 @@ namespace API.Controllers
                 return Conflict(ex.Message);
             }
         }
-
+        /// <summary>
+        /// Создание дисциплины
+        /// </summary>
+        /// <param name="createDisciplineRequest">Модель дисциплины</param>
+        /// <returns>Статус запроса</returns>
         // POST api/<DisciplineController>
         [HttpPost]
         [Authorization.Attributes.AllowAnonymous]
@@ -85,7 +110,12 @@ namespace API.Controllers
                 return Conflict(ex.Message);
             }
         }
-
+        /// <summary>
+        /// Обновление дисциплины по id
+        /// </summary>
+        /// <param name="id">id дисциплины</param>
+        /// <param name="updateDisciplineRequest">Новые данные</param>
+        /// <returns>Статус запроса</returns>
         // PUT api/<DisciplineController>
         [HttpPut("{id}")]
         [Authorization.Attributes.AllowAnonymous]
@@ -106,7 +136,11 @@ namespace API.Controllers
                 return Conflict(ex.Message);
             }
         }
-
+        /// <summary>
+        /// Удаление дисциплины по id
+        /// </summary>
+        /// <param name="id">id дисциплины</param>
+        /// <returns>Статус запроса</returns>
         // DELETE api/<DisciplineController>
         [HttpDelete("{id}")]
         [Authorization.Attributes.AllowAnonymous]

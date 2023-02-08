@@ -11,23 +11,45 @@ using System.Threading.Tasks;
 
 namespace Logic.WriteServices
 {
+    /// <summary>
+    /// Сервис обработки дисциплин
+    /// </summary>
     public class DisciplineWriteService : IDisciplineWriteService
     {
+        /// <summary>
+        /// Общий репозиторий
+        /// </summary>
         private IUnitOfWorkRepository _repositories;
+        /// <summary>
+        /// Конвертор моделей
+        /// </summary>
         readonly IMapper _mapper;
+        /// <summary>
+        /// Конструктор с DI
+        /// </summary>
+        /// <param name="repositories">Общий репозиторий</param>
+        /// <param name="mapper">Конвертор моделей</param>
         public DisciplineWriteService(IUnitOfWorkRepository repositories, IMapper mapper)
         {
             _repositories = repositories;
             _mapper = mapper;
         }
-
+        /// <summary>
+        /// Создать дисциплину
+        /// </summary>
+        /// <param name="createDisciplineRequest">Модель создания дисциплины</param>
+        /// <returns>id добавленной дисциплины</returns>
         public Guid Add(CreateDisciplineRequest createDisciplineRequest)
         {
             Guid id = _repositories.Disciplines.Add(_mapper.Map<Discipline>(createDisciplineRequest)).Id;
             _repositories.SaveChanges();
             return id;
         }
-
+        /// <summary>
+        /// Обновить дисциплину по id
+        /// </summary>
+        /// <param name="id">id дисциплины для обновления</param>
+        /// <param name="updateDisciplineRequest">Модель для обновления</param>
         public void Update(Guid id, UpdateDisciplineRequest updateDisciplineRequest)
         {
             Discipline discipline = _repositories.Disciplines.Get(id);
@@ -35,6 +57,10 @@ namespace Logic.WriteServices
             _repositories.Disciplines.Update(discipline);
             _repositories.SaveChanges();
         }
+        /// <summary>
+        /// Удалить дисциплину по id
+        /// </summary>
+        /// <param name="id">id дисциплины для удаления</param>
         public void Delete(Guid id)
         {
             Discipline discipline = _repositories.Disciplines.Get(id);

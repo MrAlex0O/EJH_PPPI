@@ -8,6 +8,9 @@ using DataBase.Contexts;
 
 namespace API.Controllers
 {
+    /// <summary>
+    /// HTTP-контроллер для групп
+    /// </summary>
     [Authorization.Attributes.Authorize( Roles.Admin )]
     [Route("api/[controller]")]
     [ApiController]
@@ -15,13 +18,20 @@ namespace API.Controllers
     {
         IGroupWriteService _groupWriteService;
         IGroupReadService _groupReadService;
+        /// <summary>
+        /// Конструктор с DI
+        /// </summary>
+        /// <param name="groupWriteService">Сервис записи групп</param>
+        /// <param name="groupReadService">Сервис чтения групп</param>
         public GroupController(IGroupWriteService groupWriteService, IGroupReadService groupReadService)
         {
             _groupWriteService = groupWriteService;
             _groupReadService = groupReadService;
         }
-
-
+        /// <summary>
+        /// Получение всех групп
+        /// </summary>
+        /// <returns>Все группы</returns>
         // GET api/<GroupController>
         [HttpGet]
         [Authorization.Attributes.Authorize( Roles.Student)]
@@ -37,7 +47,11 @@ namespace API.Controllers
                 return Conflict(ex.Message);
             }
         }
-        
+        /// <summary>
+        /// Получение группы по id
+        /// </summary>
+        /// <param name="id">id группы</param>
+        /// <returns>Группа по id</returns>
         // GET api/<GroupController>
         [HttpGet("{id}")]
         public async Task<ActionResult<GetGroupResponse>> Get(Guid id)
@@ -52,7 +66,11 @@ namespace API.Controllers
                 return Conflict(ex.Message);
             }
         }
-
+        /// <summary>
+        /// Добавить группу
+        /// </summary>
+        /// <param name="createGroupRequest">Модель группы</param>
+        /// <returns>Статус запроса</returns>
         // POST api/<GroupController>
         [HttpPost]
         public async Task<ActionResult> Post([FromBody] CreateGroupRequest createGroupRequest)
@@ -68,7 +86,12 @@ namespace API.Controllers
                 return Conflict(ex.Message);
             }
         }
-
+        /// <summary>
+        /// Обновление группы по id
+        /// </summary>
+        /// <param name="id">id группы</param>
+        /// <param name="updateGroupRequest">Новые данные</param>
+        /// <returns>Статус запроса</returns>
         // PUT api/<GroupController>
         [HttpPut("{id}")]
         public async Task<ActionResult> Put(Guid id, [FromBody] UpdateGroupRequest updateGroupRequest)
@@ -84,7 +107,11 @@ namespace API.Controllers
                 return Conflict(ex.Message);
             }
         }
-
+        /// <summary>
+        /// Удалить группу по id
+        /// </summary>
+        /// <param name="id">id группы</param>
+        /// <returns>Статус запроса</returns>
         // DELETE api/<GroupController>
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(Guid id)

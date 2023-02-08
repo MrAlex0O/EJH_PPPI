@@ -10,14 +10,29 @@ using System.Threading.Tasks;
 
 namespace DataBase.Contexts
 {
+    /// <summary>
+    /// Контекст БД
+    /// </summary>
     public class Context : DbContext, IWebContext
     {
+        /// <summary>
+        /// Строка подключения к БД
+        /// </summary>
         string _connectionString;
+        /// <summary>
+        /// Конструктор с DI
+        /// </summary>
+        /// <param name="configuration">Файл конфигураций</param>
         public Context(IConfiguration configuration)
         {
             _connectionString = configuration["ConnectionStrings:DefaultConnection"];
 
         }
+        /// <summary>
+        /// Конструктор с DI
+        /// </summary>
+        /// <param name="options">Параметры контекста</param>
+        /// <param name="configuration">Файл конфигураций</param>
         public Context(DbContextOptions options, IConfiguration configuration) : base(options)
         {
             _connectionString = configuration["ConnectionStrings:DefaultConnection"];
@@ -35,10 +50,18 @@ namespace DataBase.Contexts
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<UserRole> UserRoles { get; set; }
+        /// <summary>
+        /// Событие "при конфигурации"
+        /// </summary>
+        /// <param name="optionsBuilder">Параметры конфигурации</param>
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseNpgsql(_connectionString);
         }
+        /// <summary>
+        /// Событие "при создании моделей"
+        /// </summary>
+        /// <param name="modelBuilder">Генератор моделей</param>
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             SeedDB.UpdateTables(modelBuilder);
@@ -63,6 +86,7 @@ namespace DataBase.Contexts
                 .WithMany(i => i.Disciplines)
                 .HasForeignKey(x => x.GroupId);
         }
+
         public async Task<bool> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
             try
@@ -77,6 +101,10 @@ namespace DataBase.Contexts
 
             return true;
         }
+        /// <summary>
+        /// Сохранить изменения
+        /// </summary>
+        /// <returns>Успешность сохранения</returns>
         public bool SaveChanges()
         {
             try
@@ -92,6 +120,12 @@ namespace DataBase.Contexts
 
             return true;
         }
+        /// <summary>
+        /// Обновить модель
+        /// </summary>
+        /// <typeparam name="TEntity">Тип модели</typeparam>
+        /// <param name="entity">Модель для обновления</param>
+        /// <returns>Обновленная модель</returns>
         public EntityEntry? Update<TEntity>(TEntity entity)
         {
             try
